@@ -1,8 +1,7 @@
-package org.example.entitys;
+package org.example.entities;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.example.entitys.enums.TypeUser;
+import org.example.entities.enums.TypeUser;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,14 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user_stock")
 public class User {
 
     @Id
@@ -29,7 +27,7 @@ public class User {
     private String userName;
 
     @Column
-    private String userEmail;
+    private String email;
 
     @Column
     @JsonIgnore
@@ -42,11 +40,13 @@ public class User {
     private String name;
 
 
+    @Column
     private TypeUser typeUser;
 
 
     @OneToMany(mappedBy = "user",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
     )
     private List<CommercialInvoice> commercialInvoice;
 
@@ -55,11 +55,11 @@ public class User {
         commercialInvoice = new ArrayList<>();
     }
 
-    public User(Long id, String userName, String userEmail,
+    public User(Long id, String userName, String email,
                 String password, Long phone, String name, TypeUser typeUser) {
         this.id = id;
         this.userName = userName;
-        this.userEmail = userEmail;
+        this.email = email;
         this.password = password;
         this.phone = phone;
         this.name = name;
@@ -78,8 +78,8 @@ public class User {
     }
 
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
     }
 
 
@@ -88,6 +88,9 @@ public class User {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getPhone() {
         return phone;
@@ -108,5 +111,9 @@ public class User {
 
     public void setTypeUser(TypeUser typeUser) {
         this.typeUser = typeUser;
+    }
+
+    public List<CommercialInvoice> getCommercialInvoice() {
+        return commercialInvoice;
     }
 }

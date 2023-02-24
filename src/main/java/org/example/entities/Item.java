@@ -1,4 +1,4 @@
-package org.example.entitys;
+package org.example.entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "item_commercial_invoice")
@@ -20,8 +22,10 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private Product product;
+
+    @OneToMany(mappedBy = "item",
+            fetch = FetchType.LAZY)
+    private List<Product> product;
 
     @Column
     private Double price;
@@ -40,11 +44,12 @@ public class Item {
 
 
     public Item() {
+        this.product = new ArrayList<>();
     }
 
     public Item(Long id, Product product, Double price, Integer quantity) {
         this.id = id;
-        this.product = product;
+        this.product.add(product);
         this.price = price;
         this.quantity = quantity;
     }
@@ -57,12 +62,12 @@ public class Item {
         this.id = id;
     }
 
-    public Product getProduct() {
+    public List<Product> getProduct() {
         return product;
     }
 
     public void setProduct(Product product) {
-        this.product = product;
+        this.product.add(product);
     }
 
     public Double getPrice() {
@@ -74,7 +79,7 @@ public class Item {
     }
 
     public Double getFinalPrice() {
-        Double total = this.price *  quantity;
+        Double total = this.price * quantity;
         return total;
     }
 
