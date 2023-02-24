@@ -1,7 +1,8 @@
-package org.example.entitys;
+package org.example.entities;
 
-import org.example.entitys.enums.TypeProduct;
+import org.example.entities.enums.TypeProduct;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +30,10 @@ public class Product {
     @Column
     private Double productPrice;
 
-    @ManyToOne
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
     private Item item;
 
     public Product() {
