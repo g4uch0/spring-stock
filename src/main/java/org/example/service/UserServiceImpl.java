@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.dto.UserDto;
-import org.example.entitys.User;
+import org.example.entities.User;
 import org.example.exceptions.EmailAlreadyExistsException;
 import org.example.repositorys.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User save(UserDto user) {
         User nUser = user.getUserFromDto();
-        if (userRepository.existsByEmail(nUser.getUserEmail()))
+        if (userRepository.existsByEmail(nUser.getEmail()))
             throw new EmailAlreadyExistsException("email already exists in database");
 
         nUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

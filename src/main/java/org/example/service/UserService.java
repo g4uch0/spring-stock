@@ -1,7 +1,7 @@
 package org.example.service;
 
 import org.example.dto.UserDto;
-import org.example.entitys.User;
+import org.example.entities.User;
 
 import java.util.List;
 

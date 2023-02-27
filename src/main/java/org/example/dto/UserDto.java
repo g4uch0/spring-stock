@@ -1,7 +1,7 @@
 package org.example.dto;
 
-import org.example.entitys.User;
-import org.example.entitys.enums.TypeUser;
+import org.example.entities.User;
+import org.example.entities.enums.TypeUser;
 
 public class UserDto {
 
